@@ -1,0 +1,28 @@
+apiVersion: 2.0.0
+metadata:
+  name: python-helloworld
+components:
+  - name: python
+    type: python
+    reference: python:3.9
+    commands:
+      - command: python main.py
+workspaces:
+  - name: main
+    components:
+      - name: python
+        volumeMounts:
+          - name: code
+            mountPath: /workspace
+        projects:
+          - name: helloworld
+            source:
+              git:
+                url: https://github.com/your-username/helloworld.git
+                branch: master
+        commands:
+          - name: run
+            command: python app.py
+volumes:
+  - name: code
+    type: emptyDir
